@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gérer les médecins{% endblock %}
+
+{% block body %}
+    <style>
+        tr{display: none;}
+    </style>
+    <h1>Choisir un médecin</h1><a class="btn btn-outline-success my-3" href="{{ path('medecin_new') }}">Nouveau médecin</a>
+    <input class="form-control" onkeyup="chercherMedecin()" type="text" id="searchMedecin" placeholder="Tapez le nom d'un medecin">
+    <table class="table" id="tabMedecin">
+        <!--<thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Adresse</th>
+                <th>Tel</th>
+                <th>Specialitecomplementaire</th>
+                <th>Departement</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>-->
+        <tbody >
+        {% for medecin in medecins %}
+            <tr>
+                <td><a class="link-dark" href="{{ path('medecin_show', {'id': medecin.id}) }}">{{ medecin.nom ~ " " ~ medecin.prenom}}</a></td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+<script>    
+function chercherMedecin() {
+  var input, filter, table, tr, td, i, txtValue
+  input = document.getElementById("searchMedecin"); //récupère input
+  filter = input.value.toUpperCase();//recupère valeur input et la mets en majuscule
+  table = document.getElementById("tabMedecin");//recupère le tableau de medecins
+  tr = table.getElementsByTagName("tr"); //récupère lignes du tableau
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];// dans la ligne de l'indice (i) de la boucle, on récupère la cellule à l'index 0
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) == 0) {
+        tr[i].style.display = "block";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+</script>
+{% endblock %}

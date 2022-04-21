@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+    <h1 class="my-4">Bienvenue sur votre application de gestion de visites ! </h1>
+    <p><a class="text-body" href="{{path('app_login')}}">Connectez-vous</a> pour accéder à : </p>
+    <ul>
+        <li class="fw-bold my-3"> La gestion de vos rapports de visite :</li>
+            <ul class='list-group list-group-flush'>
+                <li class="my-2 list-group-item">Recherche par date</li>
+                <li class="my-2 list-group-item">Modification des rapports</li>
+                <li class="my-2 list-group-item">Visualisation</li>
+                <li class="my-2 list-group-item" style="display:none;"></li>
+            </ul>
+        <li class="fw-bold my-3"> Les gestion de vos médecins :</li>
+             <ul class='list-group list-group-flush'>
+                <li class="my-2 list-group-item">Recherche par nom</li>
+                <li class="my-2 list-group-item">Modification des informations</li>
+                <li class="my-2 list-group-item">Visualisation des informations</li>
+                <li class="my-2 list-group-item" style="display:none;"></li>
+
+            </ul>
+    </ul>
+{% endblock %}

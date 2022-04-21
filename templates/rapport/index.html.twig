@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gérer les rapports de visite{% endblock %}
+
+{% block body %}
+<style>
+  tbody tr{display: none;}
+</style>
+    <h1> Gérer les rapports de visite </h1>
+    <a class="btn btn-outline-success my-3" href="{{ path('rapport_new') }}">Nouveau rapport</a>
+    <input class="form-control" onchange="chercherDate()" type="date" id="searchDate">
+    <table id="tabDate" class="table text-center" >
+        <thead class="table-dark">
+            <tr>
+                <th style="display: none;">#</th>
+                <th class="col-md-4">Date</th>
+                <th class="col-md-4">Motif</th>
+                <th class="col-md-4">Bilan</th>
+                <th class="col-md-4"></th>
+                <th class="col-md-4"></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for rapport in rapports %}
+            <tr class="align-middle ">
+                <td style="display: none;">{{ rapport.date ? rapport.date|date('Y-m-d') : '' }}</td>
+                <td class="col-md-4">{{ rapport.date ? rapport.date|date('d/m/Y') : '' }}</td>
+                <td class="col-md-4">{{ rapport.motif }}</td>
+                <td class="col-md-4">{{ rapport.bilan }}</td>
+                <td class="col-md-4"><a class='btn btn-outline-secondary my-2' href="{{ path('rapport_show', {'id': rapport.id}) }}">voir</a></td>
+                <td class="col-md-4"><a class='btn btn-outline-secondary my-2' href="{{ path('rapport_edit', {'id': rapport.id}) }}">modifier</a></td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+<script>    
+function chercherDate() {
+  var input, filter, table, tr, td, i, txtValue
+  input = document.getElementById("searchDate"); //récupère input
+  filter = input.value.toUpperCase();//recupère valeur input et la mets en majuscule
+  table = document.getElementById("tabDate");//recupère le tableau de rapports
+  tr = table.getElementsByTagName("tr"); //récupère lignes du tableau
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];// dans la ligne de l'indice (i) de la boucle, on récupère la cellule à l'index 1
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "table-row";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+</script>    
+{% endblock %}

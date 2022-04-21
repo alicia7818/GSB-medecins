@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau medecin{% endblock %}
+
+{% block body %}
+
+    <h1>Créer un nouveau médecin</h1>
+    <a class="btn btn-outline-secondary my-2" href="{{ path('medecin_index') }}">Retourner à la liste</a>
+    {{ include('medecin/_form.html.twig') }}
+
+   
+{% endblock %}

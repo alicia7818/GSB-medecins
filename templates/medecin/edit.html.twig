@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier les informations du medecin{% endblock %}
+
+{% block body %}
+    <h1>Modifier les informations du medecin</h1>
+
+    {{ include('medecin/_form.html.twig', {'button_label': 'Ennregistrer'}) }}
+
+    <a class='btn btn-outline-secondary my-2' href="{{ path('medecin_index') }}">Retourner à la liste</a>
+
+{% endblock %}

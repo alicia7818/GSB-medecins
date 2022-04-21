@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Rapport{% endblock %}
+
+{% block body %}
+    <a class='btn btn-outline-secondary my-3' href="{{ path('rapport_index') }}">Retour à la liste des rapports</a>
+
+    <h1 class="my-2">Rapport</h1>
+
+    <table class="table my-2">
+        <tbody>
+            <thead class='table-dark'>
+                <th>Date</th>
+                <th>Motif</th>
+                <th>Bilan</th>
+            </thead>
+            <tr>
+                <td>{{ rapport.date ? rapport.date|date('d/m/Y') : '' }}</td>
+                <td>{{ rapport.motif }}</td>
+                <td>{{ rapport.bilan }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <a class='btn btn-outline-secondary' href="{{ path('rapport_edit', {'id': rapport.id}) }}">Modifier</a>
+
+  
+{% endblock %}

@@ -1,0 +1,101 @@
+<div class="tailleForm p-2 mx-auto border">
+    {{ form_start(form) }}
+    <div class="my-custom-class-for-errors">
+        {{ form_errors(form) }}
+    </div>
+    <div class="form-group">
+        {{form_row(form.date)}}
+    </div>
+    <div class="form-group">
+        {{form_row(form.motif)}}
+    </div>
+    <div class="form-group">
+        {{form_row(form.bilan)}}
+    </div>
+    <div class="form-group">
+        {{form_row(form.idvisiteur)}}
+    </div>
+    <div class="form-group" style="position:relative;">
+        
+        {{form_label(form.idmedecin)}}
+        {{form_widget(form.idmedecin)}}
+        <input type="text" class="form-control" id="searchmedecin" style="position:absolute; bottom:0; margin-bottom:0!important;">
+    </div>
+        <ul class="offrirs list-group list-group-flush" data-index="{{ form.offrirs|length > 0 ? form.offrirs|last.vars.name + 1 : 0 }}" data-prototype="{{ form_widget(form.offrirs.vars.prototype)|e('html_attr') }}"></ul>
+        <button type="button" class="add_item_link btn btn-outline-secondary my-2" data-collection-holder-class="offrirs">Ajouter un medicament</button>
+        <button class="btn btn-outline-success my-2">{{ button_label|default('Enregistrer') }}</button>
+    {{ form_end(form) }}
+</div>
+
+<script type="text/javascript" defer>
+try {        
+    document.getElementById("searchmedecin").value = document.getElementById("rapport_idmedecin").options[document.getElementById("rapport_idmedecin").selectedIndex].text;
+}
+catch (error) {
+  console.error(error);
+}
+    //lorsqu'on clique sur l'une des options du select, on cache la liste d'option 
+    //et on applique l'option selectionnée dans l'input de recherche
+    document.getElementById("rapport_idmedecin").addEventListener("change", function(e) {
+        document.getElementById("rapport_idmedecin").setAttribute("size", "1");//size pour afficher le nombre d'éléments à afficher, 1 pour la valeur de size
+        
+        //On affiche la valeur 
+        document.getElementById("searchmedecin").value = document.getElementById("rapport_idmedecin").options[document.getElementById("rapport_idmedecin").selectedIndex].text;
+         // on séléctionne la liste de tout les éléments (rapport_idmedecin) puis on récupère le texte de l'option séléctionné qu'on applique dans le input
+    });
+
+    document.getElementById("searchmedecin").addEventListener("keyup", function(e) { 
+    //on récupère la valeur de l'input et on ajoute un evenement qui attends une saisie sur le clavier
+        let allMedecin = document.getElementById("rapport_idmedecin");
+        //(let:declare variable) on récupère la valeur du select qu'on place dans la variable allMedecin
+
+        //On cache tout les medecins qui ne correpondent pas a la saisie 
+        document.getElementById("rapport_idmedecin").querySelectorAll("option").forEach(element => {
+            element.style.display = "none"; 
+            //on rend toutes les options du select invisible par défaut
+            if (element.innerText.toLowerCase().includes(document.getElementById("searchmedecin").value.toLowerCase())) {
+                element.style.display = "block";
+            //on verifie que le texte tapé dans le select correspond au texte inscrit dans l'option, puis on l'affiche si c'est la cas
+            }
+        });
+
+        allMedecin.setAttribute("size", "8"); //ouvre la liste d'option du select
+    });
+
+    const addFormToCollection = (e) => {
+        const collectionHolder = document.querySelector('.' + e.currentTarget.dataset.collectionHolderClass);
+        const item = document.createElement('li');
+        item.classList.add("list-group-item")
+        item.innerHTML = collectionHolder
+            .dataset
+            .prototype
+            .replace(
+            /__name__/g,
+            collectionHolder.dataset.index
+            );
+        collectionHolder.appendChild(item);
+        collectionHolder.dataset.index++;
+
+        // add a delete link to the new form
+        addTagFormDeleteLink(item);
+    };
+
+    const addTagFormDeleteLink = (tagFormLi) => {
+        const removeFormButton = document.createElement('button')
+        removeFormButton.classList.add("btn", "btn-danger")
+        removeFormButton.innerText = 'Supprimer'
+
+        tagFormLi.append(removeFormButton);
+
+        removeFormButton.addEventListener('click', (e) => {
+            e.preventDefault()
+            // remove the li for the tag form
+            tagFormLi.remove();
+    });
+}
+
+    document
+    .querySelectorAll('.add_item_link')
+    .forEach(btn => btn.addEventListener("click", addFormToCollection));
+
+</script>

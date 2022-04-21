@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Medecin{% endblock %}
+
+{% block body %}
+    <a class="btn btn-outline-secondary mb-3" href="{{ path('medecin_index') }}">Retourner sur la page de recherche de médecin</a></li>
+    </nav>
+    <div class="row">
+        <div class="col">
+        <h1>Informations médecin</h1>
+            <table class="table table-hover">
+                <tbody>
+                    <tr>
+                        <th>Nom</th>
+                        <td>{{ medecin.nom }}</td>
+                    </tr>
+                    <tr>
+                        <th>Prenom</th>
+                        <td>{{ medecin.prenom }}</td>
+                    </tr>
+                    <tr>
+                        <th>Adresse</th>
+                        <td>{{ medecin.adresse }}</td>
+                    </tr>
+                    <tr>
+                        <th>Tel</th>
+                        <td><a href="tel:{{ medecin.tel }}">{{ medecin.tel }}</td>
+                    </tr>
+                    <tr>
+                        <th>Specialité complémentaire</th>
+                        {% if medecin.specialitecomplementaire =="" %}
+                            <td>Aucune</td>
+                        {% else %}
+                        <td>{{ medecin.specialitecomplementaire }}</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <th>Departement</th>
+                        <td>{{ medecin.departement }}</td>
+                    </tr>
+
+                </tbody>
+            </table>
+            <a href="{{ path('medecin_edit', {'id': medecin.id}) }}" class="btn btn-outline-secondary my-2">Modifier les informations du médecin</a>
+
+        </div>
+        <div class="col">
+            <h1>Derniers rapports envoyés</h1>
+            <table class="table table-hover">
+                <tbody>
+                    {% for rapport in rapports %}
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Date</th>
+                            <th>Motif</th>
+                            <th>Bilan</th>
+                            
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td>{{rapport.getDate|date("d/m/Y")}}</span></td>
+                        <td>{{rapport.getMotif}}</td>
+                        <td>{{rapport.getBilan}}</td>
+                    </tr>
+                    
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

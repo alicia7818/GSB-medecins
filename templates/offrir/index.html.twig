@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Offrir index{% endblock %}
+
+{% block body %}
+    <h1>Offrir index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Quantité</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for offrir in offrirs %}
+            <tr>
+                <td>{{ offrir.quantite }}</td>
+                <td>
+                    <a href="{{ path('offrir_show', {'id': offrir.id}) }}">Voir</a>
+                    <a href="{{ path('offrir_edit', {'id': offrir.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('offrir_new') }}">Créer un nouveau</a>
+{% endblock %}

@@ -1,0 +1,24 @@
+html, body, input, select{
+    font-family: 'Montserrat', sans-serif;
+}
+
+table tr:hover{
+    background-color: #ececec;
+    cursor: pointer;
+}
+.form-control{
+    margin-bottom: 1rem!important;
+    background-color: white !important;
+}
+
+.tailleForm{
+    width:40%;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+    background-color: white !important;
+}
+
+.btn{
+    border-radius:25px!important;
+}
+
